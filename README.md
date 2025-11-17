@@ -1,91 +1,96 @@
-# Contact Form Backend API
+# 🔐 Auth-System — Login, Register & Bcrypt
 
-A RESTful API built with Node.js, Express, and MongoDB for managing user authentication and contact form submissions.
+A simple and secure authentication system built with **Node.js**, **Express**, and **MongoDB**, using **bcrypt** for password hashing. This project lets users register, log in, submit contact messages (optional), and update passwords — ideal for beginners learning authentication and a small contact-form backend.
 
-## Features
+---
 
-- **User Authentication**
-  - User registration with password hashing (bcrypt)
-  - Secure login with JWT token generation
-  - Token-based authentication middleware
-  - Password update functionality
+## 🔧 Built With
 
-- **Contact Form Management**
-  - Authenticated users can submit contact messages
-  - Messages are linked to user accounts
-  - Admin endpoint to view all contact submissions
+* ⚡ **Node.js + Express** — backend server & routing
+* 🧠 **JavaScript (ES Modules)** — modern syntax & clean structure
+* 🗄️ **MongoDB + Mongoose** — database and schema handling
+* 🔐 **bcrypt** — secure password hashing
+* 🌿 **dotenv** — environment variable management
+* 🔑 **jsonwebtoken** — JWT-based authentication
 
-- **User Management**
-  - Delete user accounts
-  - View all registered users
-  - Update user passwords
+---
 
-## Tech Stack
+## 🌟 Features
 
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **MongoDB** - Database
-- **Mongoose** - ODM for MongoDB
-- **bcrypt** - Password hashing
-- **jsonwebtoken** - JWT authentication
-- **dotenv** - Environment variable management
+* ✅ User registration with hashed passwords (bcrypt)
+* ✅ Secure login with JWT token generation
+* ✅ Password update route with validation
+* ✅ Token-based authentication middleware for protected routes
+* ✅ Optional: Contact form submission tied to authenticated users
+* ✅ Admin routes to list users and all contact submissions
+* ✅ Organized project structure for scalability
+* ✅ Input validation and error handling
 
-## Installation
+---
 
-1. Clone the repository
+## 🚀 Quick Start
+
 ```bash
-git clone <your-repo-url>
+# Clone the repository
+git clone https://github.com/sahillll0/Contact_From_API
 cd contact-form-backend-api
-```
 
-2. Install dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-3. Create a `.env` file in the root directory
-```env
-MONGO_DB_URL=mongodb://localhost:27017
-DB_NAME=contactfrom
-PORT=8001
-JWT_SECRET=your_secret_key_here
-```
-
-4. Start MongoDB service
-
-5. Run the application
-```bash
+# Create a .env file (see example below)
+# Start MongoDB service
 npm start
 ```
 
-## API Endpoints
+> Recommended: run with `nodemon` during development.
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the project root and add:
+
+```env
+MONGO_DB_URL=your_mongodb_connection_string
+DB_NAME=your_db_name
+PORT=8001
+JWT_SECRET=your_jwt_secret
+```
+
+---
+
+## 📚 API Endpoints
 
 ### Public Routes
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/` | Health check |
-| POST | `/ragister` | Register new user |
-| POST | `/login` | User login (returns JWT token) |
+| Method | Endpoint    | Description                               |
+| ------ | ----------- | ----------------------------------------- |
+| GET    | `/`         | Health check                              |
+| POST   | `/ragister` | Register new user (name, email, password) |
+| POST   | `/login`    | Login user (returns JWT token)            |
 
-### Protected Routes (Requires Authentication)
+### Protected Routes (Require `Authorization: Bearer <token>`)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/contectForm` | Submit contact message |
-| PUT | `/editPassword` | Update user password |
-| DELETE | `/delete` | Delete user account |
+| Method | Endpoint        | Description                                    |
+| ------ | --------------- | ---------------------------------------------- |
+| POST   | `/contectForm`  | Submit contact message (authenticated users)   |
+| PUT    | `/editPassword` | Update user password (email, oldPass, newPass) |
+| DELETE | `/delete`       | Delete user account                            |
 
 ### Admin Routes
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/all/admin` | Get all contact submissions |
-| GET | `/users` | Get all registered users |
+| Method | Endpoint     | Description                              |
+| ------ | ------------ | ---------------------------------------- |
+| GET    | `/all/admin` | Get all contact submissions (admin only) |
+| GET    | `/users`     | Get all registered users (admin only)    |
 
-## Request Examples
+---
 
-### Register User
+## 🔁 Request Examples
+
+**Register**
+
 ```json
 POST /ragister
 {
@@ -95,7 +100,8 @@ POST /ragister
 }
 ```
 
-### Login
+**Login**
+
 ```json
 POST /login
 {
@@ -104,8 +110,9 @@ POST /login
 }
 ```
 
-### Submit Contact Form (Authenticated)
-```json
+**Submit Contact Form (Authenticated)**
+
+```
 POST /contectForm
 Headers: Authorization: Bearer <your_jwt_token>
 {
@@ -113,7 +120,8 @@ Headers: Authorization: Bearer <your_jwt_token>
 }
 ```
 
-### Update Password
+**Update Password**
+
 ```json
 PUT /editPassword
 {
@@ -123,16 +131,9 @@ PUT /editPassword
 }
 ```
 
-## Authentication
+---
 
-Protected routes require a JWT token in the Authorization header:
-```
-Authorization: Bearer <your_jwt_token>
-```
-
-Get the token by logging in through the `/login` endpoint.
-
-## Project Structure
+## 🧱 Project Structure
 
 ```
 ├── controllers/
@@ -159,27 +160,43 @@ Get the token by logging in through the `/login` endpoint.
 └── package.json
 ```
 
-## Environment Variables
+---
 
-| Variable | Description |
-|----------|-------------|
-| `MONGO_DB_URL` | MongoDB connection URL |
-| `DB_NAME` | Database name |
-| `PORT` | Server port (default: 8001) |
-| `JWT_SECRET` | Secret key for JWT signing |
+## 🔐 Security Features
 
-## Security Features
+* Password hashing with **bcrypt** (never store plain-text passwords)
+* JWT-based authentication for protected routes
+* Middleware to verify tokens and protect endpoints
+* Input validation and standardized error responses
 
-- Password hashing using bcrypt
-- JWT-based authentication
-- Protected routes with middleware
-- Input validation
-- Error handling
+---
 
-## License
+## 🧪 Testing
+
+Test the API with Postman, Insomnia, or Thunder Client (VS Code extension). Use the `/login` route to obtain a token and pass it in the `Authorization` header for protected routes.
+
+---
+
+## 💡 Notes & Tips
+
+* Change `JWT_SECRET` to a long, unpredictable string in production.
+* Use environment-specific DBs (development, staging, production).
+* Add rate-limiting and CSRF protection if exposing to the public internet.
+
+---
+
+## 📄 License
 
 ISC
 
-## Author
+---
 
-Your Name
+🤷‍♂️ Author & Acknowledgements
+
+Made with ❤️ by **sahillll0**
+
+Thanks for checking out this project!
+
+If you found it helpful, ⭐ star the repo — it really motivates me to build more cool stuff.
+
+“Keep learning, keep building.” – Sahillll0
